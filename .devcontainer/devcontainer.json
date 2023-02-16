@@ -1,0 +1,6 @@
+{
+  "forwardPorts": [
+    10000
+  ],
+  "postAttachCommand": "/bin/bash .devcontainer/setup-codespace-10k.sh"
+}

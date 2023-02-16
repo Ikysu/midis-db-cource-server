@@ -1,0 +1,26 @@
+{
+  "main": "index.ts",
+  "type": "commonjs",
+  "scripts": {
+    "start": "ts-node ./src/index.ts",
+    "dev": "nodemon",
+    "cs": "gh codespace ports visibility 10000:public -c $CODESPACE_NAME && nodemon"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.17",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.8.2",
+    "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "@fastify/autoload": "^5.7.1",
+    "@fastify/cors": "^8.2.0",
+    "@fastify/env": "^4.2.0",
+    "@fastify/sensible": "^5.2.0",
+    "fastify": "^4.13.0",
+    "fastify-plugin": "^4.5.0",
+    "fluent-json-schema": "^4.1.0",
+    "path": "^0.12.7",
+    "typeorm": "^0.3.12"
+  }
+}

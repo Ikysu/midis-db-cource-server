@@ -12,7 +12,7 @@ const DatabasePlugin: FastifyPluginAsync = async (fastify) => {
 
   const entities: EntityClass[] = [];
 
-  const entityPath = path.resolve("src/entity");
+  const entityPath = path.resolve("src/database");
   const files = fs
     .readdirSync(entityPath)
     .map((file) => path.join(entityPath, file));
@@ -41,7 +41,7 @@ const DatabasePlugin: FastifyPluginAsync = async (fastify) => {
 
   await dataSource.initialize();
   if (dataSource.isInitialized) {
-    logger.info("MySQL connected");
+    logger.info("MySQL initialized");
   } else {
     throw Error(`Can't connect to MySQL server`);
   }

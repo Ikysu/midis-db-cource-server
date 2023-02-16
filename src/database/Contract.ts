@@ -4,18 +4,25 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   DatabaseType,
+  OneToOne,
+  JoinTable,
+  ManyToOne,
 } from "typeorm";
+import { Client } from "./Client";
+import { Dealer } from "./Dealer";
 
 @Entity()
 export class Contract extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  id_клиента: number;
+  @ManyToOne(() => Client, (client) => client)
+  @JoinTable()
+  клиент: Client;
 
-  @Column()
-  id_дилера: number;
+  @ManyToOne(() => Dealer, (dealer) => dealer)
+  @JoinTable()
+  дилер: Dealer;
 
   @Column()
   дата_заключения_договора: number;

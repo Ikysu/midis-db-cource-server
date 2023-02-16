@@ -8,6 +8,7 @@ import {
   JoinTable,
   ManyToOne,
 } from "typeorm";
+import { DataTypeDefaults } from "typeorm/driver/types/DataTypeDefaults";
 import { Client } from "./Client";
 import { Dealer } from "./Dealer";
 
@@ -25,22 +26,22 @@ export class Contract extends BaseEntity {
   дилер: Dealer;
 
   @Column()
-  дата_заключения_договора: number;
+  дата_заключения_договора: Date;
 
   @Column()
   марка_автомобиля: string;
 
-  @Column()
+  @Column({type: "text"})
   фото_автомобиля: string;
 
   @Column()
-  дата_выпуска: string;
+  дата_выпуска: Date;
 
   @Column()
   пробег: number;
 
   @Column()
-  дата_продажи: string;
+  дата_продажи: Date;
 
   @Column()
   цена_продажи: number;

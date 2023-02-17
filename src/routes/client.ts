@@ -19,8 +19,6 @@ const ClientRoute: FastifyPluginAsync = async (fastify) => {
     let query = await Client.query(
       `SELECT * FROM client LIMIT ${limit} OFFSET ${offset}`
     );
-
-    console.log(query);
     return query;
   });
 

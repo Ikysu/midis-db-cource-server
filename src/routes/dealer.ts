@@ -19,8 +19,6 @@ const DealerRoute: FastifyPluginAsync = async (fastify) => {
     let query = await Dealer.query(
       `SELECT * FROM dealer LIMIT ${limit} OFFSET ${offset}`
     );
-
-    console.log(query);
     return query;
   });
 

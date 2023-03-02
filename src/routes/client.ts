@@ -19,7 +19,7 @@ const ClientRoute: FastifyPluginAsync = async (fastify) => {
   };
 
   fastify.put<PutClientDto>("/", async (req, res) => {
-    let { фамилия, имя, отчество, город, адрес, телефон } = req.body;
+    let { фамилия, имя, отчество, город, адрес, телефон }: any = req.body;
     if (!фамилия || !имя || !отчество || !город || !адрес || !телефон)
       throw fastify.httpErrors.badRequest("Переданы не все поля");
 
@@ -60,9 +60,7 @@ const ClientRoute: FastifyPluginAsync = async (fastify) => {
       }
       let out = getStr(0);
       if(out!=""){
-        theFind+=`WHERE \`id\` IN (`+out+`) OFFSET ${offset}`
-      }else{
-        theFind+=` OFFSET ${offset}`
+        theFind+=`WHERE \`id\` IN (`+out+`)`
       }
     }
 
@@ -74,18 +72,19 @@ const ClientRoute: FastifyPluginAsync = async (fastify) => {
 
   // =====================================
   // Read
-  type GetClietnDto = {
+  type GetClientDto = {
     Querystring: {
       id: number;
     };
   };
 
-  fastify.get<GetClietnDto>("/", async (req, res) => {
+  fastify.get<GetClientDto>("/", async (req, res) => {
     let { id } = req.query;
-    let query = await Client.query(
+    let query: any = await Client.query(
       `SELECT * FROM client WHERE \`id\` = ${id} LIMIT 1;`
     );
-    return query;
+    if(!query.length) return fastify.httpErrors.notFound("Client not found")
+    return query[0];
   });
 
   // =====================================

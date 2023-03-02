@@ -44,7 +44,7 @@ const DealerRoute: FastifyPluginAsync = async (fastify) => {
     if (!offset || offset < 0) offset = 0;
 
     let query = await Dealer.query(
-      `SELECT * FROM dealer LIMIT ${limit} OFFSET ${offset}`
+      `SELECT * FROM dealer`
     );
     return query;
   });
@@ -60,10 +60,11 @@ const DealerRoute: FastifyPluginAsync = async (fastify) => {
   fastify.get<GetDealerDto>("/", async (req, res) => {
     let { id } = req.query;
 
-    let query = await Dealer.query(
+    let query: any = await Dealer.query(
       `SELECT * FROM dealer WHERE \`id\` = ${id} LIMIT 1;`
     );
-    return query;
+    if(!query.length) return fastify.httpErrors.notFound("Dealer not found")
+    return query[0];
   });
 
   // =====================================

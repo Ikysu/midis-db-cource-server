@@ -4,10 +4,14 @@ import { Contract } from "../database/Contract";
 export const autoPrefix = "contract";
 
 const ContractRoute: FastifyPluginAsync = async (fastify) => {
+  // Create
+
+  // =====================================
+  // Read
   type GetContractListDto = {
     Querystring: {
-      limit: number;
-      offset: number;
+      limit?: number;
+      offset?: number;
     };
   };
 
@@ -21,6 +25,9 @@ const ContractRoute: FastifyPluginAsync = async (fastify) => {
     );
     return query;
   });
+
+  // =====================================
+  // Update
 };
 
 export default ContractRoute;

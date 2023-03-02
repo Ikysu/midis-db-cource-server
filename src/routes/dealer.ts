@@ -4,25 +4,8 @@ import { Dealer } from "../database/Dealer";
 export const autoPrefix = "dealer";
 
 const DealerRoute: FastifyPluginAsync = async (fastify) => {
-  type GetDealerListDto = {
-    Querystring: {
-      limit: number;
-      offset: number;
-    };
-  };
-
-  fastify.get<GetDealerListDto>("/", async (req, res) => {
-    let { limit, offset } = req.query;
-    if (!limit || limit < 0) limit = 10;
-    if (!offset || offset < 0) offset = 0;
-
-    let query = await Dealer.query(
-      `SELECT * FROM dealer LIMIT ${limit} OFFSET ${offset}`
-    );
-    return query;
-  });
-
-  type PutDealerListDto = {
+  // Create
+  type PutDealerDto = {
     Body: {
       фамилия: string;
       имя: string;
@@ -33,7 +16,7 @@ const DealerRoute: FastifyPluginAsync = async (fastify) => {
     };
   };
 
-  fastify.put<PutDealerListDto>("/", async (req, res) => {
+  fastify.put<PutDealerDto>("/", async (req, res) => {
     let { фамилия, имя, отчество, фотография, адрес, телефон } = req.body;
     if (!фамилия || !имя || !отчество || !фотография || !адрес || !телефон)
       throw fastify.httpErrors.badRequest("Переданы не все поля");
@@ -45,6 +28,85 @@ const DealerRoute: FastifyPluginAsync = async (fastify) => {
     console.log(query);
     return query;
   });
+
+  // =====================================
+  // Read List
+  type GetDealerListDto = {
+    Querystring: {
+      limit?: number;
+      offset?: number;
+    };
+  };
+
+  fastify.get<GetDealerListDto>("/list", async (req, res) => {
+    let { limit, offset } = req.query;
+    if (!limit || limit < 0) limit = 10;
+    if (!offset || offset < 0) offset = 0;
+
+    let query = await Dealer.query(
+      `SELECT * FROM dealer LIMIT ${limit} OFFSET ${offset}`
+    );
+    return query;
+  });
+
+  // =====================================
+  // Read
+  type GetDealerDto = {
+    Querystring: {
+      id: number;
+    };
+  };
+
+  fastify.get<GetDealerDto>("/", async (req, res) => {
+    let { id } = req.query;
+
+    let query = await Dealer.query(
+      `SELECT * FROM dealer WHERE \`id\` = ${id} LIMIT 1;`
+    );
+    return query;
+  });
+
+  // =====================================
+  // Update
+  type UpdateDealerDto = {
+    Body: {
+      id: number;
+      фамилия?: string;
+      имя?: string;
+      отчество?: string;
+      фотография?: string;
+      адрес?: string;
+      телефон?: string;
+    };
+  };
+  
+  fastify.post<UpdateDealerDto>("/", async (req, res) => {
+    let { id, фамилия, имя, отчество, фотография, адрес, телефон } = req.body;
+    let queryString = "UPDATE dealer SET ",
+        updateList: string[] = [];
+
+    if(фамилия) updateList.push(`\`фамилия\` = '${фамилия}'`)
+    if(имя) updateList.push(`\`имя\` = '${имя}'`)
+    if(отчество) updateList.push(`\`отчество\` = '${отчество}'`)
+    if(фотография) updateList.push(`\`фотография\` = '${фотография}'`)
+    if(адрес) updateList.push(`\`адрес\` = '${адрес}'`)
+    if(телефон) updateList.push(`\`телефон\` = '${телефон}'`)
+
+    if(updateList.length){
+      queryString+=updateList.join(", ");
+      queryString+=` WHERE \`id\` = ${id};`
+      let query = await Dealer.query(
+        queryString
+      );
+      return query;
+    }else{
+      let query = await Dealer.query(
+        `SELECT * FROM dealer WHERE \`id\` = ${id} LIMIT 1;`
+      );
+      return query;
+    }
+  });
+
 };
 
 export default DealerRoute;

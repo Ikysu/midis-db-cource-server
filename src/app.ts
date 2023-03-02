@@ -10,7 +10,7 @@ import S from "fluent-json-schema";
 const app: FastifyPluginAsync = async (fastify, options) => {
   await fastify.register(Env, {
     schema: S.object()
-      .prop("PORT", S.number().default(10000))
+      .prop("PORT", S.number().default(15173))
       .prop("MYSQL_HOST", S.string().required())
       .prop("MYSQL_PORT", S.number().required().default(3306))
       .prop("MYSQL_USERNAME", S.string().required())

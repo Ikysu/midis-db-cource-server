@@ -17,7 +17,7 @@ async function start() {
 
   await fastify.register(App);
 
-  const port = Number(process.env.PORT) || 10000;
+  const port = Number(process.env.PORT) || 15173;
   const host = "0.0.0.0";
 
   fastify.listen({ port, host }, (err) => {

@@ -25,7 +25,6 @@ const DealerRoute: FastifyPluginAsync = async (fastify) => {
       `INSERT INTO dealer (\`id\`, \`фамилия\`, \`имя\`, \`отчество\`, \`фотография\`, \`адрес\`, \`телефон\`) VALUES (NULL, '${фамилия}', '${имя}', '${отчество}', '${фотография}', '${адрес}', '${телефон}')`
     );
 
-    console.log(query);
     return query;
   });
 

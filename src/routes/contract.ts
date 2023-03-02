@@ -24,7 +24,6 @@ const ContractRoute: FastifyPluginAsync = async (fastify) => {
 
   fastify.put<PutContractDto>("/", async (req, res) => {
     let { клиентId, дилерId, дата_заключения_договора, дата_выпуска, дата_продажи, фото_автомобиля, марка_автомобиля, пробег, цена_продажи, размер_комиссионных, примечание } = req.body;
-    console.log(req.body)
     if (клиентId == undefined || дилерId  == undefined || дата_заключения_договора  == undefined || дата_выпуска  == undefined || дата_продажи == undefined || фото_автомобиля  == undefined || марка_автомобиля  == undefined || пробег  == undefined || цена_продажи  == undefined || размер_комиссионных  == undefined || примечание  == undefined)
       throw fastify.httpErrors.badRequest("Переданы не все поля");
 

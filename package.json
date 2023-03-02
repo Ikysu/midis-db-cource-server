@@ -1,6 +1,7 @@
 {
   "main": "index.ts",
   "type": "commonjs",
+  "author": "Ikysu",
   "scripts": {
     "start": "ts-node ./src/index.ts",
     "dev": "nodemon",
